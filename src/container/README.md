@@ -1,0 +1,1 @@
+Add smart components here (use state)

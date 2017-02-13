@@ -32,3 +32,5 @@ react-native run-android
 * [mobx](https://medium.com/react-native-training/react-native-with-mobx-getting-started-ba7e18d8ff44#.9abxnq9te)
 
 * [react-native-material-ui](https://github.com/xotahal/react-native-material-ui)
+
+* [React Native Textinput Effects](https://github.com/halilb/react-native-textinput-effects)
