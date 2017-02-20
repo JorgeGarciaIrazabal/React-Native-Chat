@@ -4,7 +4,7 @@ import {COLOR, ThemeProvider, Toolbar} from 'react-native-material-ui';
 import routes from './routes';
 import core_styles from './styles/core-styles';
 import theme from './styles/ui-theme';
-import firebase from 'firebase';
+import * as firebase from "firebase";
 import firebaseConfig from './config/firebase.config';
 
 firebase.initializeApp(firebaseConfig);

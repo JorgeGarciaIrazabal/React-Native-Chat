@@ -7,7 +7,7 @@ import {Sae} from 'react-native-textinput-effects';
 import {Button} from 'react-native-material-ui';
 import theme from '../styles/ui-theme';
 import {observable} from 'mobx';
-
+import * as firebase from "firebase";
 
 class Login extends Component {
 
@@ -37,11 +37,11 @@ class Login extends Component {
   }
 
   renderLoginButton() {
-    return (<Button primary text="Google" onClick={onAuth}/>);
+    return <Button primary text="Google" onPress={this.onAuth.bind(this)}/>;
   }
 
   renderLogoutButton() {
-    return (<Button primary text="Logout" onClick={onLogout}/>)
+    return <Button primary text="Logout" onPress={this.onLogout.bind(this)}/>;
   }
 
   render() {
@@ -68,7 +68,7 @@ class Login extends Component {
           autoCapitalize={'none'}
           secureTextEntry={true}
         />
-        {user ? renderLogoutButton() : renderLoginButton()}
+        {this.user ? this.renderLogoutButton() : this.renderLoginButton()}
       </View>
     );
   }
