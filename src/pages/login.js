@@ -7,7 +7,11 @@ import {Sae} from 'react-native-textinput-effects';
 import {Button} from 'react-native-material-ui';
 import theme from '../styles/ui-theme';
 
-
+const FBSDK = require('react-native-fbsdk');
+const {
+  LoginButton,
+  AccessToken
+} = FBSDK;
 
 
 class Login extends Component {
@@ -36,6 +40,24 @@ class Login extends Component {
           secureTextEntry={true}
         />
         <Button primary text="Login" />
+        <LoginButton
+          publishPermissions={["publish_actions"]}
+          onLoginFinished={
+            (error, result) => {
+              if (error) {
+                alert("login has error: " + result.error);
+              } else if (result.isCancelled) {
+                alert("login is cancelled.");
+              } else {
+                AccessToken.getCurrentAccessToken().then(
+                  (data) => {
+                    alert(data.accessToken.toString())
+                  }
+                )
+              }
+            }
+          }
+          onLogoutFinished={() => alert("logout.")}/>
       </View>
     );
   }
