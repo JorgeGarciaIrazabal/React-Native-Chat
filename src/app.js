@@ -1,6 +1,8 @@
-import React, {Component} from 'react';
-import {Navigator, NativeModules, StatusBar, View} from 'react-native';
-import {COLOR, ThemeProvider, Toolbar} from 'react-native-material-ui';
+import React, { Component } from 'react';
+import { Navigator, NativeModules, StatusBar, View } from 'react-native';
+
+import { COLOR, ThemeProvider, Toolbar } from 'react-native-material-ui';
+
 import routes from './routes';
 import core_styles from './styles/core-styles';
 import theme from './styles/ui-theme';

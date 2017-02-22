@@ -1,20 +1,26 @@
-import {View, StyleSheet} from 'react-native';
-import React, {Component, PropTypes} from 'react';
-import {routes} from '../routes';
-import core_styles from '../styles/core-styles';
-import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
-import {Sae} from 'react-native-textinput-effects';
-import {Button} from 'react-native-material-ui';
-import theme from '../styles/ui-theme';
+import React, { Component, PropTypes } from 'react';
+import { View, StyleSheet, Text } from 'react-native';
 
-const FBSDK = require('react-native-fbsdk');
-const {
-  LoginButton,
-  AccessToken
-} = FBSDK;
+import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
+import { Sae } from 'react-native-textinput-effects';
+import { LoginButton, GraphRequest, GraphRequestManager } from 'react-native-fbsdk';
+import { Button } from 'react-native-material-ui';
+
+import { routes }  from '../routes';
+import core_styles from '../styles/core-styles';
+import theme       from '../styles/ui-theme';
 
 
 class Login extends Component {
+
+  _responseInfoCallback(error, result) {
+    if (error) {
+      alert('Error login: ' + error.toString());
+    } else {
+      alert('Logged in with: ' + result.name.toString());
+    }
+  }
+
   render() {
     return (
       <View style={core_styles.form}>
@@ -39,25 +45,27 @@ class Login extends Component {
           autoCapitalize={'none'}
           secureTextEntry={true}
         />
-        <Button primary text="Login" />
-        <LoginButton
-          publishPermissions={["publish_actions"]}
-          onLoginFinished={
-            (error, result) => {
-              if (error) {
-                alert("login has error: " + result.error);
-              } else if (result.isCancelled) {
-                alert("login is cancelled.");
-              } else {
-                AccessToken.getCurrentAccessToken().then(
-                  (data) => {
-                    alert(data.accessToken.toString())
-                  }
-                )
+        <View style={core_styles.facebookBtn}>
+          <LoginButton
+            publishPermissions={["publish_actions"]}
+            onLoginFinished={
+              (error, result) => {
+                if (error) {
+                  alert("login has error: " + result.error);
+                } else if (result.isCancelled) {
+                  alert("login is cancelled.");
+                } else {
+                  let infoRequest = new GraphRequest(
+                    '/me',
+                    null,
+                    this._responseInfoCallback,
+                  );
+                  new GraphRequestManager().addRequest(infoRequest).start();
+                }
               }
             }
-          }
-          onLogoutFinished={() => alert("logout.")}/>
+            onLogoutFinished={() => alert("logout.")}/>
+        </View>
       </View>
     );
   }

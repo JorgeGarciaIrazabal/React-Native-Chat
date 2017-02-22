@@ -11,5 +11,10 @@ export default StyleSheet.create({
   },
   input: {
     color: theme.palette.primaryColor
+  },
+  facebookBtn: {
+    flex: 1,
+    alignItems: 'center',
+    padding: 15
   }
 });
