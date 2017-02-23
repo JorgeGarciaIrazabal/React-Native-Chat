@@ -1,7 +1,7 @@
 package com.react_native_chat;
 
 import com.facebook.react.ReactActivity;
-
+import android.content.Intent;
 public class MainActivity extends ReactActivity {
 
     /**
@@ -11,5 +11,11 @@ public class MainActivity extends ReactActivity {
     @Override
     protected String getMainComponentName() {
         return "React_Native_Chat";
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        MainApplication.getCallbackManager().onActivityResult(requestCode, resultCode, data);
     }
 }
