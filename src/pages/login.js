@@ -10,7 +10,7 @@ import { routes }  from '../routes';
 import core_styles from '../styles/core-styles';
 import theme       from '../styles/ui-theme';
 
-
+@observer
 class Login extends Component {
 
   _responseInfoCallback(error, result) {
