@@ -1,0 +1,8 @@
+version: '2'
+services:
+  db:
+    image: mongo:latest
+    volumes:
+      - ${REACT_CHAT_PATH}/backend/mongodata:/data/db
+    ports:
+       - 27017:27017
