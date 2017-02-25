@@ -6,18 +6,20 @@ import { COLOR, ThemeProvider, Toolbar } from 'react-native-material-ui';
 import routes from './routes';
 import core_styles from './styles/core-styles';
 import theme from './styles/ui-theme';
+import store from './store/store';
 
 const UIManager = NativeModules.UIManager;
 
 export default class App extends Component {
-  static configureScene(route) {
+  configureScene(route) {
     return route.animationType || Navigator.SceneConfigs.FloatFromRight;
   }
-  static renderScene(route, navigator) {
+
+  renderScene(route, navigator) {
     return (
       <View style={core_styles.container}>
-        <StatusBar backgroundColor="rgba(0, 0, 0, 0.2)" translucent />
-        <View style={{ backgroundColor: COLOR.green500, height: 24 }} />
+        <StatusBar backgroundColor="rgba(0, 0, 0, 0.2)" translucent/>
+        <View style={{ backgroundColor: COLOR.green500, height: 24 }}/>
         <View style={core_styles.container}>
           <Toolbar
             leftElement="arrow-back"
@@ -27,11 +29,13 @@ export default class App extends Component {
           <route.Page
             route={route}
             navigator={navigator}
+            store={store}
           />
         </View>
       </View>
     );
   }
+
   componentWillMount() {
     if (UIManager.setLayoutAnimationEnabledExperimental) {
       UIManager.setLayoutAnimationEnabledExperimental(true);
@@ -41,12 +45,11 @@ export default class App extends Component {
   render() {
     return (
       <ThemeProvider uiTheme={theme}>
-
         <Navigator
           style={core_styles.container}
-          configureScene={App.configureScene}
+          configureScene={this.configureScene.bind(this)}
           initialRoute={routes.login}
-          renderScene={App.renderScene}
+          renderScene={this.renderScene.bind(this)}
         />
       </ThemeProvider>
     );
