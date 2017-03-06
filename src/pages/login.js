@@ -29,6 +29,7 @@ class Login extends Component {
       let loggedUser = User.constructFromJson(loggedUserJson);
       this.props.store.self = loggedUser;
       await this.localStorage.setSelf(loggedUser);
+      this.props.route.push(routes.contact);
     }
     catch (e) {
       console.error(e);
