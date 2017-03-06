@@ -1,6 +1,7 @@
 import json
 import logging.config
 import os
+import socket
 
 from bson import ObjectId
 from mongoengine import connect
@@ -9,6 +10,14 @@ from wshubsapi.connection_handlers.tornado_handler import ConnectionHandler
 from wshubsapi.hubs_inspector import HubsInspector
 
 from db_context.tables import ReactChatDocument
+
+
+def get_ip():
+    return [l for l in (
+    [ip for ip in socket.gethostbyname_ex(socket.gethostname())[2] if not ip.startswith("127.")][:1], [
+        [(s.connect(('8.8.8.8', 53)), s.getsockname()[0], s.close()) for s in
+         [socket.socket(socket.AF_INET, socket.SOCK_DGRAM)]][0][1]]) if l][0][0]
+
 
 abspath = os.path.abspath(__file__)
 dirName = os.path.dirname(abspath)
@@ -55,6 +64,8 @@ if __name__ == '__main__':
     HubsInspector.construct_js_file(os.path.join(CHAT_PATH, 'src/hubsApi.js'))
     # HubsInspector.construct_dart_file()
     # Hub.constructJAVAFile("com.application.jorge.whereappu.WebSocket","C:/Software Projects/WhereAppU/app/src/main/java/com/application/jorge/whereappu/WebSocket")
-    log.debug("start listening in: 8844")
-    app.listen(8844)
+    port = 8844
+    ip = get_ip()
+    log.debug("start listening in: ws://{}:{}".format(ip, port))
+    app.listen(port)
     ioloop.IOLoop.instance().start()

@@ -1,6 +1,8 @@
 import {observable} from 'mobx';
 
-export default class User {
+import Model from './model';
+
+export default class User extends Model{
   /** @type string*/
   @observable name = '';
 
@@ -8,17 +10,14 @@ export default class User {
   @observable lastName = '';
 
   /** @type string*/
-  @observable email = '';
+  @observable email;
 
-  /** @type number*/
-  @observable id = '';
+  /** @type string*/
+  @observable password = '';
 
-  constructor(name: string, email: string) {
-    this.name = name;
-    this.email = email;
-  }
+  /** @type string*/
+  @observable pictureUrl = '';
 
-  static constructFromJson(json: Object) {
-    // todo: necessary to implement
-  }
+  /** @type Object*/
+  @observable facebookData = {};
 }
