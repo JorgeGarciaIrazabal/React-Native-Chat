@@ -1,23 +1,37 @@
-import React, { Component, PropTypes } from 'react';
-import { View, StyleSheet, Text } from 'react-native';
+import React, {Component, PropTypes} from 'react';
+import {View, StyleSheet, Text, AsyncStorage, Button} from 'react-native';
 
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
-import { Sae } from 'react-native-textinput-effects';
-import { LoginButton, GraphRequest, GraphRequestManager } from 'react-native-fbsdk';
-import { Button } from 'react-native-material-ui';
+import {Sae} from 'react-native-textinput-effects';
+import {observer} from 'mobx-react/native'
 
-import { routes }  from '../routes';
+import {routes}  from '../routes';
 import core_styles from '../styles/core-styles';
 import theme       from '../styles/ui-theme';
+import API from "../services/api";
+import User from "../models/user";
+import FacebookLoginButton from "../components/FacebookLoginButton";
+import LocalStorage from "../services/localStorage";
 
 @observer
 class Login extends Component {
+  static propTypes = {
+    navigator: PropTypes.object.isRequired,
+    route: PropTypes.object.isRequired,
+  };
+  /** @type LocalStorage */
+  localStorage = LocalStorage.get();
 
-  _responseInfoCallback(error, result) {
-    if (error) {
-      alert('Error login: ' + error.toString());
-    } else {
-      alert('Logged in with: ' + result.name.toString());
+  async logIn(user: User) {
+    try {
+      let api = await API.get();
+      let loggedUserJson = await api.UserHub.server.logIn(user);
+      let loggedUser = User.constructFromJson(loggedUserJson);
+      this.props.store.self = loggedUser;
+      await this.localStorage.setSelf(loggedUser);
+    }
+    catch (e) {
+      console.error(e);
     }
   }
 
@@ -45,37 +59,10 @@ class Login extends Component {
           autoCapitalize={'none'}
           secureTextEntry={true}
         />
-        <View style={core_styles.facebookBtn}>
-          <LoginButton
-            publishPermissions={["publish_actions"]}
-            onLoginFinished={
-              (error, result) => {
-                if (error) {
-                  alert("login has error: " + result.error);
-                } else if (result.isCancelled) {
-                  alert("login is cancelled.");
-                } else {
-                  let infoRequest = new GraphRequest(
-                    '/me',
-                    null,
-                    this._responseInfoCallback,
-                  );
-                  new GraphRequestManager().addRequest(infoRequest).start();
-                }
-              }
-            }
-            onLogoutFinished={() => alert("logout.")}/>
-        </View>
+        <FacebookLoginButton onUserFetched={this.logIn.bind(this)}/>
+
       </View>
     );
   }
 }
-
-const propTypes = {
-  navigator: PropTypes.object.isRequired,
-  route: PropTypes.object.isRequired,
-};
-
-Login.propTypes = propTypes;
-
 export default Login;

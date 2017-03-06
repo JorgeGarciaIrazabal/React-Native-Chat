@@ -7,15 +7,15 @@ from db_context.tables import User
 
 
 class UserHub(Hub):
-    def log_in(self, user: dict, _sender: ConnectedClient):
-        user = User(**user)
+    def log_in(self, user_data: dict, _sender: ConnectedClient):
+        user = User(**user_data)
         try:
             user.save()
         except NotUniqueError as e:
-            user = User.objects(email=user.email).get()
+            user = User.objects(email=user_data['email']).get()
 
         utils_hub = UtilsAPIHub.get_instance()
         ''' :type :UtilsAPIHub'''
-        utils_hub.set_id(user.pk, _sender)
+        utils_hub.set_id(str(user.pk), _sender)
 
-        return user.pk
+        return user

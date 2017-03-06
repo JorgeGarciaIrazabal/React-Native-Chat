@@ -1,7 +1,9 @@
 import {observable} from 'mobx';
-import moment from 'moment';
 
-export default class Message {
+import Model from './model';
+import User from './user';
+
+export default class Message extends Model{
   /** @type User*/
   @observable sender;
 
@@ -11,18 +13,9 @@ export default class Message {
   /** @type string*/
   @observable body = '';
 
-  /** @type number utc timestamp*/
-  @observable createdAt = '';
-
-
-  constructor(sender: User, reciver: User, body: string) {
+  constructor(sender: User, receiver: User, body: string) {
     this.sender = sender;
-    this.receiver = reciver;
+    this.receiver = receiver;
     this.body = body;
-    this.createdAt = moment().utc().unix();
-  }
-
-  static constructFromJson(json: Object) {
-    // todo: necessary to implement
   }
 }

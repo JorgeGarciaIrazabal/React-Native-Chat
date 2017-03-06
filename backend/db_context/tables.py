@@ -2,10 +2,10 @@
 from datetime import datetime
 
 from inflection import underscore
-from mongoengine import connect, Q
+from mongoengine import connect, Q, DictField
 from mongoengine import Document, CASCADE
 from mongoengine.fields import StringField, DateTimeField, ImageField, ReferenceField, GeoPointField, ListField, \
-    EmailField, DynamicField
+    EmailField, DynamicField, URLField
 
 
 class ReactChatDocument(Document):
@@ -17,20 +17,25 @@ class ReactChatDocument(Document):
     created_at = DateTimeField(default=datetime.utcnow, index=True)
 
     def __init__(self, *args, **values):
-        values = {underscore(k): v for k, v in values}
+        values = {underscore(k): v for k, v in values.items()}
         super().__init__(*args, **values)
 
     def save(self, *args, **kwargs):
-        self.updated_on = datetime.utcnow()
+        self.updated_at = datetime.utcnow()
         return super().save(*args, **kwargs)
+
+    def update(self, **kwargs):
+        kwargs = {underscore(k): v for k, v in kwargs.items()}
+        return super().update(**kwargs)
 
 
 class User(ReactChatDocument):
     name = StringField(required=True)
-    # phone_number = Column(Text(collation=u'utf8_unicode_ci'), nullable=False)
-    # photo = ImageField(required=True)
-    email = EmailField(required=True, unique=True)
+    last_name = StringField(required=False)
+    picture_url = URLField(required=False)
+    email = EmailField(required=False, unique=True)
     password = StringField(required=True)
+    facebook_data = DictField(required=False)
 
 
 class Message(ReactChatDocument):
@@ -42,8 +47,4 @@ class Message(ReactChatDocument):
 
 if __name__ == '__main__':
     connect('ReactChat')
-    user = User()
-    user.name = "Jorge Garcia Irazabal"
-    user.email = 'a@a.com'
-    user.password = 'password'
-    user.save()
+    user = [u.delete() for u in User.objects]
