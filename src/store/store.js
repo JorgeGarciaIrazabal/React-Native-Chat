@@ -12,6 +12,8 @@ class Store {
 
   /** @type User This user identify the person is currently using the app */
   @observable self = {};
+
+  @observable loading = false;
 }
 
 
