@@ -4,7 +4,7 @@ export default class Singleton {
   static instance;
 
   constructor(enforcer) {
-    if(enforcer != singletonEnforcer) throw "Cannot construct singleton";
+    if(enforcer !== singletonEnforcer) throw "Cannot construct singleton";
   }
 
   static get() {

@@ -2,7 +2,7 @@ import {observable} from 'mobx';
 
 import Model from './model';
 
-export default class User extends Model{
+export default class User extends Model {
   /** @type string*/
   @observable name = '';
 
@@ -16,7 +16,7 @@ export default class User extends Model{
   @observable password = '';
 
   /** @type string*/
-  @observable pictureUrl = '';
+  @observable pictureUrl;
 
   /** @type Object*/
   @observable facebookData = {};
