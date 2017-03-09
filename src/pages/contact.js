@@ -1,22 +1,24 @@
 import React, {Component, PropTypes} from 'react';
-import {View, Text } from 'react-native';
+import {Text, ActivityIndicator, StyleSheet, View} from 'react-native';
+import Loading from '../components/Loading';
 
-import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
+import {observer} from 'mobx-react/native';
 
 import {routes}  from '../routes';
-import core_styles from '../styles/core-styles';
-import theme       from '../styles/ui-theme';
 
+@observer
 class Contact extends Component {
   static propTypes = {
     navigator: PropTypes.object.isRequired,
     route: PropTypes.object.isRequired,
+    store: PropTypes.object.isRequired,
   };
-
 
   render() {
     return (
-      <View style={core_styles.form}>
+      <View>
+        <Text>In Contact Page</Text>
+        <Loading show={this.props.store.loading}/>
       </View>
     );
   }
