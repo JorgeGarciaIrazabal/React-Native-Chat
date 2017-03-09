@@ -8,6 +8,7 @@ export default class API {
     API.hubsApi = new HubsApi(10000);
     await API.hubsApi.connect('ws://192.168.0.15:8844/');
   }
+
   /** @return HubsAPI */
   static async get() {
     if(API.hubsApi === null) {

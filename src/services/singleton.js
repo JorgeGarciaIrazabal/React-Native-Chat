@@ -1,10 +1,10 @@
-const singletonEnforcer = Symbol();
+const singletonEnforcer = "THIS IS A UNIQUE TEXT";
 
 export default class Singleton {
   static instance;
 
   constructor(enforcer) {
-    if(enforcer != singletonEnforcer) throw "Cannot construct singleton";
+    if(enforcer !== singletonEnforcer) throw "Cannot construct singleton";
   }
 
   static get() {

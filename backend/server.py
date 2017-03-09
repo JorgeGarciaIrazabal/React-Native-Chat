@@ -9,7 +9,7 @@ from tornado import web, ioloop
 from wshubsapi.connection_handlers.tornado_handler import ConnectionHandler
 from wshubsapi.hubs_inspector import HubsInspector
 
-from db_context.tables import ReactChatDocument
+from db_context.tables import ReactChatDocument, DB_NAME
 
 
 def get_ip():
@@ -57,13 +57,11 @@ app = web.Application([
 ])
 
 if __name__ == '__main__':
-    connect('ReactChat')
+    connect(DB_NAME)
 
     HubsInspector.include_hubs_in(os.path.join(CHAT_PATH, 'backend', 'hubs', '*'))
     HubsInspector.inspect_implemented_hubs()
     HubsInspector.construct_js_file(os.path.join(CHAT_PATH, 'src/hubsApi.js'))
-    # HubsInspector.construct_dart_file()
-    # Hub.constructJAVAFile("com.application.jorge.whereappu.WebSocket","C:/Software Projects/WhereAppU/app/src/main/java/com/application/jorge/whereappu/WebSocket")
     port = 8844
     ip = get_ip()
     log.debug("start listening in: ws://{}:{}".format(ip, port))

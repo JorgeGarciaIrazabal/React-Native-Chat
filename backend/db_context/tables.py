@@ -7,6 +7,7 @@ from mongoengine import Document, CASCADE
 from mongoengine.fields import StringField, DateTimeField, ImageField, ReferenceField, GeoPointField, ListField, \
     EmailField, DynamicField, URLField
 
+DB_NAME = 'ReactChat'
 
 class ReactChatDocument(Document):
     meta = {

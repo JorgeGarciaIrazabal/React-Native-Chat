@@ -10,7 +10,7 @@ export default class Model {
   @observable updatedAt;
 
   constructor() {
-    this.createdAt = moment().utc().date();
+    this.createdAt = moment().utc().toDate();
   }
 
   static constructFromJson(json: Object) {
