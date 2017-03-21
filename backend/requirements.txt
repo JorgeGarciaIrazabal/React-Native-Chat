@@ -1,3 +1,4 @@
 tornado
 wshubsapi
 mongoengine
+jsonpickle

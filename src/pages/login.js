@@ -31,7 +31,7 @@ class Login extends Component {
   async logIn(user: User) {
     try {
       await this.setSelf(user);
-      this.props.navigator.replace(routes.chat)
+      this.props.navigator.replace(routes.contact)
     }
     catch (e) {
       console.error(e);
@@ -44,11 +44,11 @@ class Login extends Component {
       user.email = 'develop+develop@gmail.com';
       user.password = '__develop';
       await this.setSelf(user);
-      this.props.navigator.replace(routes.chat)
+      this.props.navigator.replace(routes.contact)
     }
     try {
       this.props.store.self = await this.localStorage.getSelf();
-      this.props.navigator.replace(routes.chat)
+      this.props.navigator.replace(routes.contact)
     } catch (e) {
       // nothing to do
     }
