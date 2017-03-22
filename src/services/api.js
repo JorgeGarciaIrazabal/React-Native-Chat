@@ -1,4 +1,5 @@
 import HubsApi from '../hubsApi';
+import constants from './constants';
 
 export default class API {
   /** @type HubsAPI */
@@ -6,7 +7,7 @@ export default class API {
 
   static async setup() {
     API.hubsApi = new HubsApi(10000);
-    await API.hubsApi.connect('ws://192.168.0.15:8844/');
+    await API.hubsApi.connect(constants.serverWebSocketUrl);
   }
 
   /** @return HubsAPI */

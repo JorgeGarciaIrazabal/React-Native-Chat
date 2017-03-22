@@ -19,5 +19,13 @@ pip install -r requirements.txt
 python3 server.py
 ```
 
+### Heroku tips
+
+see logs:
+```
+heroku logs --tail --app {name of the app}
+```
+
+
 ### How to use
 ongoing...

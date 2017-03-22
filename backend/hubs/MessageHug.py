@@ -14,3 +14,8 @@ class MessagesHub(Hub):
                     | (Q(receiver=_sender.ID) & Q(sender=user_id))
 
         return Message.objects(condition)
+
+    def _define_client_functions(self):
+        return dict(
+            message_received=lambda message: None
+        )

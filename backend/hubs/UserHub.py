@@ -16,11 +16,18 @@ class UserHub(Hub):
 
         utils_hub = UtilsAPIHub.get_instance()
         ''' :type :UtilsAPIHub'''
-        env = _sender.api_get_real_connected_client().api_get_comm_environment()
-        self.__remove_existing_connection(env, user)
+        self.__remove_existing_connection(str(user.pk))
         utils_hub.set_id(str(user.pk), _sender)
         return user
 
-    def __remove_existing_connection(self, env, user):
-        if str(user.pk) in env.all_connected_clients:
-            env.all_connected_clients.pop(str(user.pk))
+    def get_users(self, _sender: ClientInHub):
+        # todo get only friends from user
+        return list(User.objects(id__ne=_sender.ID))
+
+    def get_users_status(self, users_ids):
+        connections = map(lambda user_id: user_id in self.clients.all_connected_clients, users_ids)
+        return dict(zip(users_ids, connections))
+
+    def __remove_existing_connection(self, user_id):
+        if user_id in self.clients.all_connected_clients:
+            self.clients.all_connected_clients.pop(user_id)
