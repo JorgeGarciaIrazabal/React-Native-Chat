@@ -34,3 +34,14 @@ react-native run-android
 * [react-native-material-ui](https://github.com/xotahal/react-native-material-ui)
 
 * [React Native Textinput Effects](https://github.com/halilb/react-native-textinput-effects)
+
+
+### Deploy script
+
+To run the android application with a specific environment run:
+
+```
+python3 backend/scripts/deploy_app.py
+```
+
+Then select the environment you want to deploy for (now only local and dev)

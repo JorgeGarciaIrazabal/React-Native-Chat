@@ -1,5 +1,7 @@
 import {observable} from 'mobx';
 
+import ChatStore from './chatStore';
+
 class Store {
   /** @type Array<User>*/
   @observable users = [];
@@ -14,6 +16,8 @@ class Store {
   @observable self = {};
 
   @observable loading = false;
+
+  @observable chatStore = new ChatStore();
 }
 
 

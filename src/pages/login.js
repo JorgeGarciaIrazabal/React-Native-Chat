@@ -13,6 +13,7 @@ import User from "../models/user";
 import FacebookLoginButton from "../components/FacebookLoginButton";
 import LocalStorage from "../services/localStorage";
 import Loading from '../components/Loading';
+import constants from '../services/constants';
 
 @observer
 class Login extends Component {
@@ -39,7 +40,7 @@ class Login extends Component {
   }
 
   async redirectIfLoggedIn() {
-    if (__DEV__) {
+    if (constants.env === 'local' && false) {
       let user = new User();
       user.email = 'develop+develop@gmail.com';
       user.password = '__develop';
@@ -48,7 +49,7 @@ class Login extends Component {
     }
     try {
       this.props.store.self = await this.localStorage.getSelf();
-      this.props.navigator.replace(routes.chat)
+      // this.props.navigator.replace(routes.chat)
     } catch (e) {
       // nothing to do
     }
@@ -62,7 +63,8 @@ class Login extends Component {
       let loggedUser = User.constructFromJson(loggedUserJson);
       this.props.store.self = loggedUser;
       await this.localStorage.setSelf(loggedUser);
-    } finally {
+    }
+    finally {
       this.props.store.loading = false;
     }
   }

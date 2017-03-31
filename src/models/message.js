@@ -13,7 +13,8 @@ export default class Message extends Model{
   /** @type string*/
   @observable body = '';
 
-  constructor(sender: User, receiver: User, body: string) {
+  constructor(sender: User=null, receiver: User=null, body: string=null) {
+    super();
     this.sender = sender;
     this.receiver = receiver;
     this.body = body;

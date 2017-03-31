@@ -2,12 +2,12 @@
 from datetime import datetime
 
 from inflection import underscore
-from mongoengine import connect, Q, DictField
 from mongoengine import Document, CASCADE
-from mongoengine.fields import StringField, DateTimeField, ImageField, ReferenceField, GeoPointField, ListField, \
-    EmailField, DynamicField, URLField
+from mongoengine import connect, DictField
+from mongoengine.fields import StringField, DateTimeField, ReferenceField, EmailField, URLField
 
 DB_NAME = 'ReactChat'
+
 
 class ReactChatDocument(Document):
     meta = {
